@@ -1,0 +1,78 @@
+HOMEWORK 1 ANSWERS:
+1. insurance_cost
+
+2. 21.73
+
+3. [CHECK TS BOUNDS]
+
+4. 27.53
+
+5.
+- The association between age and insurance costs is positive and statistically significant at conventional levels, holding other variables constant.
+- We can reject that the coefficient for smoker is equal to 0 (at <1% significance level).
+
+6. Attendance*HoursStudy
+
+7. 173, 20
+
+8.
+16 Major categories
+grad %>%
+  group_by(Major_category) %>%
+  summarize(COUNT = n())
+
+9.
+grad <- grad %>%
+  mutate(ShareWomen = Women/Total,
+         Total = Total/100,
+         Women = Women/100,
+         Men = Men/100)
+
+10.
+- The major with the highest share of women is in the education category.
+- The maximum median earnings for a major in our data is over $100,000.
+
+11. 58.7 in bio, 23.9 in engineering
+
+12. plot,
+The relationship between the proportion of women in a major vs their full time salary could be argued to be an exponentially decreasing relationship. This shows that the more women in a major, the lower their median average salary. 
+
+13.
+grad <- grad %>%
+  mutate(MathMajor = ifelse(Major_category == 'Computers & Mathematics' | Major_category == 'Engineering',
+                            yes = 1, no = 0)) %>%
+  mutate(ShareCollegeJobs = College_jobs/(College_jobs + Non_college_jobs + Low_wage_jobs))
+
+lm3 <- lm(Median ~ Total + Women + ShareCollegeJobs + MathMajor, data = grad)
+summary(lm3)
+
+14. 40
+
+15. The intercept is 31,674. This means that if all the covariates were hypothetically 0 (observing a man, no women in each major, and he is not a math major), the median income is $31,674. 
+
+16. The coefficient is 14272. This means that if someone is a math major, it's associated that their median income will be 14272 greater than someone who isn't a math major, holding all other variables constant (total people, women, proportion of women, math major).
+
+17. lm4 <- lm(Median ~ Women + MathMajor, data = grad)
+summary(lm4)
+
+[REVIEW] 18. Our hypothesis is false because the association between number of women and median earnings is stronger (larger in magnitude) for math-focused majors compared to non math-focused majors, holding other variables constant and considering statistical significance at a 10% level.
+
+[REVIEW] 19. The association between the number of women in a major and median earnings for non-math focused majors is -15.326, meaning that these women make $15.33 less per 100 women holding all other variables constant.
+
+[REVIEW] 20. The interaction between women and being a math focused major is -40.959
+
+21. Majors that are math-oriented have average median earnings that are $ 
+ higher than non math-oriented majors, holding number of women who graduate constant
+ 
+22. [bin width 25 isnt working]
+
+23. The coefficient of women is -0.0003713. This means that for a 0.0371% decrease median earnings, there is a 1 unit (100 women) increase. 
+
+24. The intercept is the log of the median at the base case 
+
+
+
+
+
+
+
