@@ -39,3 +39,6 @@ summary(lm_alcohol)
 #compared to people who are not legally able to drink for people exactly 21 years old 
 
 #compare treatment and control, then explain cutoff at the end 
+
+
+#NEW CHANGES PUSHED PUSHED PUSHED 
