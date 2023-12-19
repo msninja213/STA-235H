@@ -100,6 +100,7 @@ lm_simple = lm_robust(formula = call ~ treat, data = d)#COMPLETE CODE
 #use lm_robust because we're running a linear probability model (BINARY MODEL)
 #lmk_robust tells you the right standard errors
 summary(lm_simple)
+
 #interpretation:
 #on average, having an african american reduced the probability of a call back 
 #by 3.2% points compared to having a white sounding name on your CV

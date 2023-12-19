@@ -24,7 +24,6 @@ library(vtable)
 # Cars, cars, cars ----
 
 cars <- read.csv("https://raw.githubusercontent.com/maibennett/sta235/main/exampleSite/content/Classes/Week2/1_OLS/data/SoCalCars.csv", stringsAsFactors = FALSE)
-
 sumtable(cars)
 
 ## Let's clean some data
@@ -56,23 +55,19 @@ ggplot(data = cars, aes(y = price, x = year)) +
   theme_bw()+
   xlab("Year (since 1970)") + ylab("Price (1,000 USD)")
 
-
 ## Let's run a regression of price on mileage, year, rating, luxury, and the interaction of luxury and year.
 
 lm2 <- lm(price ~ mileage + rating + luxury*year, data = cars) #COMPLETE THE CODE. if you use * to show interaction, don't need to list out the variables separately 
-
-lm2 <- lm(price ~ mileage + rating + luxury + year + luxury:year, data = cars) #COMPLETE THE CODE
-
 summary(lm2)
 
-#### Q: What's the change in price for one additional year for luxury-brand cars vs non-luxury-brand cars, holding other variables constant?
+#### Q: What's the change in price for one additional year for luxury-brand cars vs non-luxury-brand cars, holding other variables constant? 
+#- it's the interaction between luxury and non-luxury 
 #- for non-luxury cars, for 1 additional year in 1970, price decreases by -0.357 holding rating and mileage constant
 #- for luxury cars, for 1 additional year in 1970 the price increases by 0.70072 - 0.35713. dont do anything with year because it's not numerical, it's categorical (either a 1 or 0) 
 #- 0.7007: the difference in slopes between luxury and non-luxury cars. this is statistically significant 
 #- intercept: mileage = 0, rating = 0, used nonluxury, made in 1970 is 40k
 #- a used luxury car with mileage=0, rating=0, luxury car made in 1970 is 21k
 #- this is because of how the regression fits the data. the luxury cars have a positive slope while non-luxury has a negative slope 
-
 
 
 # Visualizing data ----
@@ -88,15 +83,19 @@ ggplot(data = cars, aes(x = price)) +
 
 ## We can also look at some descriptive statistics:
 
-cars %>% select(price) %>% summary(.)
+cars %>% 
+  select(price) %>% 
+  summary(.)
 
 ## Let's create a new variable, log_price
-
-cars <- cars %>% mutate(log_price = log(price)) #Be careful here! If Y=0, then log is not defined!
+cars <- cars %>% 
+  mutate(log_price = log(price)) #Be careful here! If Y=0, then log is not defined!
 
 #### Q; Now, plot the same plot as before, but using log_price. How would you describe this 
-
-ggplot() # COMPLETE THIS
+ggplot(data = cars, aes(x = log_price)) +
+  geom_histogram(color = "#BF3984", fill = "white", lwd = 1.5, bins = 40) + #You can change "bins" depending on your data. Make sure you don't have too many or too few! Play around with.
+  theme_bw()+
+  xlab("Price (M $)") + ylab("Count") # COMPLETE THIS
 
 ## Now let's run the regression:
 

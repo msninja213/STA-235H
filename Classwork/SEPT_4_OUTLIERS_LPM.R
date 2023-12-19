@@ -94,6 +94,12 @@ head(HMDA)
 HMDA = HMDA %>% #category to numeric
   mutate(deny_num = ifelse(deny == 'yes', 1, 0))
 
+HMDA = HMDA %>%
+  mutate(deny = as.numeric(deny)-1)
+
+lm_deny1 = lm(deny ~ pirat + afam, data = HMDA)
+summary(lm_deny1)
+
 HMDA %>%
   select(deny) %>%
   table()
@@ -108,8 +114,20 @@ HMDA %>%
 # chist (credit history), single, hschool (high school diploma),
 # insurance, and race as the covariates.
 
-lm_deny = lm_robust(deny_num ~ pirat + chist + single + hschool + afam, data = HMDA)
+lm_deny = lm_robust(deny_num ~ pirat + chist + single + hschool + afam + insurance, data = HMDA)
 summary(lm_deny)  
+#on average holding all other variables constant, a 1 unit increase in payment to income ratio (pirat) is 
+#associated with a 48% pp increase in the probability of getting the loan denied 
+
+#or, on average holding all other variables constant, a 1 unit increase in the payment to income ratio 
+#increases the a probabilty of getting denied by 0.48.
+
+#high school: if someone has a hs diploma vs someone without one, on average, they have a 12 pp less likely chance to get their loan denied than someone without a hs diploma
+#if someone has a hs diploma vs someone without one, on average, they have a 0.12 less probabilty of getting their loan denied, holding all other variables constant 
+
+
+lm_deny2 = lm_robust(deny_num ~ pirat + afam, data = HMDA)
+summary(lm_deny2) #conclusion doesn't change with robust, but the SE changes
   
 # Q: interpret the coefficient for pirat, hschool, and afam.
   

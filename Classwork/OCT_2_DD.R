@@ -4,7 +4,8 @@ library(estimatr)
 
 netflix = read.csv("https://raw.githubusercontent.com/maibennett/sta235/main/exampleSite/content/Classes/Week7/1_DiffInDiff/data/netflix.csv")
 
-#Q1, 2
+#Q1:Create a binary variable treat for the states that were part of the pilot (1) and those that were not (0)
+#Q2: Create a binary variable post that takes the value of 1 if the information was collected after the pilot rollout (May 2022), and 0 in another case.
 netflix = netflix %>%
   mutate(treat = ifelse(state == 'CA' | state == 'NY', 1, 0)) %>%
   mutate(post = ifelse(survey == 'June2022' | survey == 'July2022', 1, 0))
@@ -31,7 +32,15 @@ netflix %>%
   group_by(treat, post) %>%
   summarize(mean(subscribed))
 
-#What was the change in subscriptions before and after the pilot a) for CA and NY, and b) other states?
+#a) What was the change in subscriptions before and after the pilot a) for CA and NY, and b) other states?
+#For CA and NY:  0.635−0.543=0.092
+#For other states: 0.515−0.488=0.027
+
+#b) What is the difference in subscriptions between the treatment and the control group in a) April 2022, and b) July 2022?
+#treat: NY/Cali vs other states
+#post: when treatment was assigned 
+#A) before pilot rollout (April). So it's  0.543 - 0.488 = 0.055
+#B) After pilot rollout (July). So it's 0.635 - 0.515 = 0.12
 
 #Q5 -- bc outcomes are binary
 lm_dd = lm_robust(subscribed ~ treat*post, data = netflix)
