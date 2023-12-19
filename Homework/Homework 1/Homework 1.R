@@ -85,4 +85,3 @@ Median <- grad$Median
 log_Median <- log(Median)
 lm6 <- lm(log_Median ~ Total + ShareCollegeJobs + MathMajor * Women, data = grad)
 summary(lm6)
-
